@@ -1,7 +1,5 @@
 package com.fat246.orders.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -50,6 +48,9 @@ public class MainPage extends AppCompatActivity
     //抽屉
     private DrawerLayout mDrawerLayou;
     private ActionBarDrawerToggle mABD;
+
+    //记录退出时间
+    private static long exitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,23 +209,15 @@ public class MainPage extends AppCompatActivity
             return;
         }
 
-        new AlertDialog.Builder(this)
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        if (System.currentTimeMillis() - exitTime > 2000) {
 
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+            Toast.makeText(MainPage.this, "再按一次退出！", Toast.LENGTH_SHORT).show();
+            exitTime=System.currentTimeMillis();
 
-                        MainPage.this.finish();
-                    }
-                })
-                .setTitle("是否确定要推出？")
-                .show();
+        } else {
+
+            super.onBackPressed();
+        }
     }
 
 
