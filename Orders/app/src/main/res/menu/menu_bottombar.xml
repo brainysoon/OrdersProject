@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_all_orders"
+        android:icon="@drawable/action_all_orders"
+        android:title="@string/action_all_orders" />
+    <item
+        android:id="@+id/tab_orders"
+        android:icon="@drawable/action_mine_orders"
+        android:title="@string/action_mine_orders" />
+    <item
+        android:id="@+id/tab_all_applys"
+        android:icon="@drawable/action_all_applys"
+        android:title="@string/action_all_applys" />
+
+    <item
+        android:id="@+id/tab_applys"
+        android:icon="@drawable/action_mine_applys"
+        android:title="@string/action_mine_applys" />
+</menu>
