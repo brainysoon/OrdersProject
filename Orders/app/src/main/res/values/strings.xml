@@ -57,6 +57,10 @@
     <string name="nav_group_share_name">分享到</string>
     <string name="main_menu_search_name">搜索</string>
     <string name="main_menu_search_hint">订单/申请单</string>
+    <string name="drawer_item_setting">设置</string>
+    <string name="drawer_item_about">关于</string>
+    <string name="drawer_item_update">检查更新</string>
+    <string name="drawer_item_feedback">用户反馈</string>
 
     <string name="popup_all_orders_delete">删除</string>
     <string name="popup_all_orders_add">添加</string>

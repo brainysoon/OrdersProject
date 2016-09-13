@@ -28,6 +28,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.0'
     compile 'com.roughike:bottom-bar:1.4.0.1'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.mikepenz:itemanimators:0.2.4@aar'
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
     compile('com.mikepenz:materialdrawer:5.6.0@aar') {
         transitive = true
     }
