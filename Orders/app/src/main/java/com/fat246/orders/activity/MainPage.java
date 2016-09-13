@@ -270,6 +270,13 @@ public class MainPage extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
+        if (mDrawer.isDrawerOpen()) {
+
+            mDrawer.closeDrawer();
+
+            return;
+        }
+
         if (System.currentTimeMillis() - exitTime > 2000) {
 
             Toast.makeText(MainPage.this, "再按一次退出！", Toast.LENGTH_SHORT).show();
@@ -277,7 +284,7 @@ public class MainPage extends AppCompatActivity
 
         } else {
 
-            super.onBackPressed();
+            moveTaskToBack(true);
         }
     }
 
