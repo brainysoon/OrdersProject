@@ -53,7 +53,6 @@ public class MainPage extends AppCompatActivity
 
 
     public static final int PROFILE_ITEM_DEFAULT_POSITION = 0;
-    public static final int PROFILE_ITEM_OUT_POSITION = 1;
 
     public static MainPage mInstance = null;
 
@@ -156,6 +155,44 @@ public class MainPage extends AppCompatActivity
 
             Intent intent = new Intent(MainPage.this, LoginPage.class);
             startActivity(intent);
+        }
+    };
+
+    //退出登录
+    Runnable nagToLogOut = new Runnable() {
+        @Override
+        public void run() {
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(MainPage.this);
+
+            builder.setTitle(R.string.alert_logout);
+            builder.setIcon(R.mipmap.ic_launcher);
+            builder.setMessage("是否要退出登录？");
+
+            builder.setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    MyApplication.isLoginSucceed = false;
+                    MyApplication.mUser = null;
+
+                    Intent intent = new Intent(MainPage.this, LoginPage.class);
+
+                    startActivity(intent);
+
+                    MainPage.this.finish();
+                }
+            });
+
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    dialogInterface.dismiss();
+                }
+            });
+
+            builder.create().show();
         }
     };
 
@@ -386,10 +423,7 @@ public class MainPage extends AppCompatActivity
             runnable = nagToLogIn;
         } else if (profile.getIdentifier() == PROFILE_ITEM_OUT) {
 
-            MyApplication.isLoginSucceed = false;
-            MyApplication.mUser = null;
-
-            updateAfterLogOut();
+            runnable = nagToLogOut;
         }
 
         if (runnable != null) {
@@ -444,36 +478,6 @@ public class MainPage extends AppCompatActivity
                     .withNameShown(true);
 
             mAccountHeader.addProfile(proAccount, PROFILE_ITEM_DEFAULT_POSITION);
-
-            mAccountHeader.removeProfile(PROFILE_ITEM_OUT_POSITION);
-
-            ProfileSettingDrawerItem proOut = new ProfileSettingDrawerItem();
-            proOut.withIdentifier(PROFILE_ITEM_OUT)
-                    .withName("退出登录")
-                    .withIcon(GoogleMaterial.Icon.gmd_alert_circle);
-
-            mAccountHeader.addProfile(proOut, PROFILE_ITEM_OUT_POSITION);
-        }
-    }
-
-    //退出登录
-    public void updateAfterLogOut() {
-
-        if (!MyApplication.isLoginSucceed && MyApplication.mUser == null) {
-
-            //移除原来的Accout
-            mAccountHeader.removeProfile(PROFILE_ITEM_OUT_POSITION);
-            mAccountHeader.removeProfile(PROFILE_ITEM_DEFAULT_POSITION);
-
-            ProfileDrawerItem proAccount = new ProfileDrawerItem();
-            proAccount.withIdentifier(PROFILE_ITEM_NO_USER)
-                    .withName("未登录")
-                    .withEmail("点击登录或者注册")
-                    .withIcon(R.drawable.profile)
-                    .withNameShown(true);
-
-            mAccountHeader.addProfile(proAccount, PROFILE_ITEM_DEFAULT_POSITION);
-
         }
     }
 }
