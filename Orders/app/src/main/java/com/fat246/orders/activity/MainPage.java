@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fat246.orders.R;
+import com.fat246.orders.application.MyApplication;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.manager.AutoUpdateManager;
 import com.fat246.orders.utils.BottomBarUtils;
@@ -29,6 +30,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
@@ -41,11 +43,19 @@ public class MainPage extends AppCompatActivity
         Drawer.OnDrawerItemClickListener {
 
     public static final int PROFILE_ITEM_NO_USER = 21;
+    public static final int PROFILE_ITEM_USER = 22;
+    public static final int PROFILE_ITEM_OUT = 23;
 
     public static final int DRAWER_ITEM_SETTING = 10;
     public static final int DRAWER_ITEM_ABOUT = 11;
     public static final int DRAWER_ITEM_FEEDBACK = 12;
     public static final int DRAWER_ITME_UPDATE = 13;
+
+
+    public static final int PROFILE_ITEM_DEFAULT_POSITION = 0;
+    public static final int PROFILE_ITEM_OUT_POSITION = 1;
+
+    public static MainPage mInstance = null;
 
     //用户用户信息
     private UserInfo mUserInfo;
@@ -154,6 +164,8 @@ public class MainPage extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
+        mInstance = this;
+
         //拿到用户登录信息   或者恢复数据
         mUserInfo = UserInfo.getData(this);
 
@@ -220,6 +232,11 @@ public class MainPage extends AppCompatActivity
                 .withName(R.string.drawer_item_update)
                 .withIcon(GoogleMaterial.Icon.gmd_refresh);
 
+        ProfileSettingDrawerItem proOut = new ProfileSettingDrawerItem();
+        proOut.withIdentifier(PROFILE_ITEM_OUT)
+                .withName("退出登录")
+                .withIcon(GoogleMaterial.Icon.gmd_alert_circle);
+
         ProfileDrawerItem proAccount = new ProfileDrawerItem();
         proAccount.withIdentifier(PROFILE_ITEM_NO_USER)
                 .withName("未登录")
@@ -233,11 +250,19 @@ public class MainPage extends AppCompatActivity
                 .withTranslucentStatusBar(true)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
-                        proAccount
+                        proAccount,
+                        proOut
                 )
                 .withOnAccountHeaderListener(this)
                 .withSavedInstance(savedInstanceState)
                 .build();
+
+
+        //
+        if (MyApplication.isLoginSucceed && MyApplication.mUser != null) {
+
+            updateUserInfo();
+        }
 
         //Create the drawer
         mDrawer = new DrawerBuilder()
@@ -359,6 +384,12 @@ public class MainPage extends AppCompatActivity
         if (profile.getIdentifier() == PROFILE_ITEM_NO_USER) {
 
             runnable = nagToLogIn;
+        } else if (profile.getIdentifier() == PROFILE_ITEM_OUT) {
+
+            MyApplication.isLoginSucceed = false;
+            MyApplication.mUser = null;
+
+            updateAfterLogOut();
         }
 
         if (runnable != null) {
@@ -396,5 +427,53 @@ public class MainPage extends AppCompatActivity
 
         }
         return false;
+    }
+
+    //登录成功过后
+    public void updateUserInfo() {
+
+        if (MyApplication.isLoginSucceed && MyApplication.mUser != null) {
+
+            //首先移除原来的
+            mAccountHeader.removeProfile(PROFILE_ITEM_DEFAULT_POSITION);
+
+            ProfileDrawerItem proAccount = new ProfileDrawerItem();
+            proAccount.withIdentifier(PROFILE_ITEM_USER)
+                    .withName(MyApplication.mUser.getmUser())
+                    .withIcon(R.drawable.profile)
+                    .withNameShown(true);
+
+            mAccountHeader.addProfile(proAccount, PROFILE_ITEM_DEFAULT_POSITION);
+
+            mAccountHeader.removeProfile(PROFILE_ITEM_OUT_POSITION);
+
+            ProfileSettingDrawerItem proOut = new ProfileSettingDrawerItem();
+            proOut.withIdentifier(PROFILE_ITEM_OUT)
+                    .withName("退出登录")
+                    .withIcon(GoogleMaterial.Icon.gmd_alert_circle);
+
+            mAccountHeader.addProfile(proOut, PROFILE_ITEM_OUT_POSITION);
+        }
+    }
+
+    //退出登录
+    public void updateAfterLogOut() {
+
+        if (!MyApplication.isLoginSucceed && MyApplication.mUser == null) {
+
+            //移除原来的Accout
+            mAccountHeader.removeProfile(PROFILE_ITEM_OUT_POSITION);
+            mAccountHeader.removeProfile(PROFILE_ITEM_DEFAULT_POSITION);
+
+            ProfileDrawerItem proAccount = new ProfileDrawerItem();
+            proAccount.withIdentifier(PROFILE_ITEM_NO_USER)
+                    .withName("未登录")
+                    .withEmail("点击登录或者注册")
+                    .withIcon(R.drawable.profile)
+                    .withNameShown(true);
+
+            mAccountHeader.addProfile(proAccount, PROFILE_ITEM_DEFAULT_POSITION);
+
+        }
     }
 }

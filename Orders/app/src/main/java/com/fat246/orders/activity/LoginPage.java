@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -45,7 +44,7 @@ public class LoginPage extends AppCompatActivity {
     private UserLogInTask mAuthTask = null;
 
     //用户信息
-    private UserInfo mUserInfo=null;
+    private UserInfo mUserInfo = null;
 
     //是否连接到网络
     private boolean isConnected;
@@ -84,7 +83,7 @@ public class LoginPage extends AppCompatActivity {
     private void setInfo() {
 
         //从Intent中得到用户信息
-        mUserInfo=((MyApplication)getApplication()).getUserInfo();
+        mUserInfo = ((MyApplication) getApplication()).getUserInfo();
 
         //设置信息
         mUser.setText(mUserInfo.getmUser());
@@ -324,7 +323,7 @@ public class LoginPage extends AppCompatActivity {
                     && mNewUserInfo.operationValue != LogInParser.ERROR_VALUE_NETWORK_INCOORRECT) {
 
                 //保存登陆信息到  Preferences
-                ((MyApplication)getApplication()).setUserInfo(mNewUserInfo);
+                ((MyApplication) getApplication()).setUserInfo(mNewUserInfo);
 
             }
 
@@ -338,6 +337,15 @@ public class LoginPage extends AppCompatActivity {
 
             if (mNewUserInfo.operationValue != LogInParser.ERROR_VALUE_WRONG_PASSWORD
                     && mNewUserInfo.operationValue != LogInParser.ERROR_VALUE_NETWORK_INCOORRECT) {
+
+                //
+                MyApplication.isLoginSucceed = true;
+                MyApplication.mUser = mNewUserInfo;
+
+                if (MainPage.mInstance != null) {
+
+                    MainPage.mInstance.updateUserInfo();
+                }
 
                 //跳转
                 Intent mIntent = new Intent(LoginPage.this, MainPage.class);

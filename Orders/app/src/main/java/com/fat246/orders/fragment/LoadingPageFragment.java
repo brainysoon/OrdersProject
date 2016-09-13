@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
@@ -50,7 +49,7 @@ public class LoadingPageFragment extends Fragment {
 
         setView(rootView);
 
-        mUserInfo=((MyApplication)getActivity().getApplication()).getUserInfo();
+        mUserInfo = ((MyApplication) getActivity().getApplication()).getUserInfo();
 
         if (!isOnline()) hintUser("亲，没有网络哦。。。");
 
@@ -185,6 +184,10 @@ public class LoadingPageFragment extends Fragment {
             //判断是否登陆成功
             if (userInfo.operationValue != LogInParser.ERROR_VALUE_WRONG_PASSWORD &&
                     userInfo.operationValue != LogInParser.ERROR_VALUE_NETWORK_INCOORRECT) {
+
+                //
+                MyApplication.isLoginSucceed = true;
+                MyApplication.mUser = userInfo;
 
                 //直接进入主界面
                 mIntent = new Intent(getActivity(), MainPage.class);

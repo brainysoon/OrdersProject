@@ -54,6 +54,10 @@ public class MyApplication extends Application {
     //保存用户信息
     private UserInfo mUserInfo;
 
+    //是否登录吃成功
+    public static boolean isLoginSucceed = false;
+    public static UserInfo mUser = null;
+
     @Override
     public void onCreate() {
         super.onCreate();
