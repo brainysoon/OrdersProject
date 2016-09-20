@@ -14,14 +14,11 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by Administrator on 2016/3/5.
- */
 public class LogInParser {
 
     //登陆失败代码
-    public static final int ERROR_VALUE_WRONG_PASSWORD=99;
-    public static final int ERROR_VALUE_NETWORK_INCOORRECT=-1;
+    public static final int ERROR_VALUE_WRONG_PASSWORD = 0;
+    public static final int ERROR_VALUE_NETWORK_INCOORRECT = -1;
 
     //用户信息
     private UserInfo mUserInfo;
@@ -29,37 +26,37 @@ public class LogInParser {
     //URL str
     private String URL_Str;
 
-    public LogInParser(UserInfo mUserInfo,String URL_Str){
+    public LogInParser(UserInfo mUserInfo, String URL_Str) {
 
-        this.mUserInfo=mUserInfo;
-        this.URL_Str=URL_Str;
+        this.mUserInfo = mUserInfo;
+        this.URL_Str = URL_Str;
     }
 
     //判断用户是否能够登陆
-    public void checkLogIn(){
+    public void checkLogIn() {
 
         //测试用
-        mUserInfo.operationValue=3;
+//        mUserInfo.operationValue=3;
 
-//        mUserInfo.operationValue=sendLogInPost("loginName="+mUserInfo.getmUser()+"&"+
-//                "pwd="+mUserInfo.getmPassword());
+        mUserInfo.operationValue = sendLogInPost("loginName=" + mUserInfo.getmUser() + "&" +
+                "pwd=" + mUserInfo.getmPassword());
 
 
     }
 
-    private int sendLogInPost(String param){
+    private int sendLogInPost(String param) {
 
-        PrintWriter out=null;
+        PrintWriter out = null;
         int result;
 
-        try{
+        try {
 
-            URL url=new URL(URL_Str);
+            URL url = new URL(URL_Str);
 
             Log.e("URL", "++==" + url);
 
             //打开和URL之间的链接
-            URLConnection conn=url.openConnection();
+            URLConnection conn = url.openConnection();
 
             //设置通用的请求属性
             conn.setRequestProperty("accept", "*/*");
@@ -72,7 +69,7 @@ public class LogInParser {
             conn.setDoInput(true);
 
             //获取URLConnection对象对应的输出流
-            out=new PrintWriter(conn.getOutputStream());
+            out = new PrintWriter(conn.getOutputStream());
 
             //发送请求参数
             out.print(param);
@@ -81,52 +78,52 @@ public class LogInParser {
             out.flush();
 
             //定义InputStream 输入流来读取URL的响应
-            InputStream is=conn.getInputStream();
+            InputStream is = conn.getInputStream();
 
-            result=parse(is);
+            result = parse(is);
 
-            Log.e("result",result+"");
+            Log.e("result", result + "");
 
-        }catch (Exception e){
+        } catch (Exception e) {
             //Log.e("misstake",""+e.getMessage());
-            result=ERROR_VALUE_NETWORK_INCOORRECT;
+            result = ERROR_VALUE_NETWORK_INCOORRECT;
         }
 
 
         return result;
     }
 
-    private int parse(InputStream is) throws XmlPullParserException,IOException{
+    private int parse(InputStream is) throws XmlPullParserException, IOException {
 
-        int result=-1;
+        int result = -1;
 
-        try{
+        try {
 
-            XmlPullParser parser= Xml.newPullParser();
+            XmlPullParser parser = Xml.newPullParser();
 
             parser.setInput(is, "utf-8");
 
-            int eventType=parser.getEventType();
-            while (eventType!=XmlPullParser.END_DOCUMENT){
+            int eventType = parser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
 
-                switch (eventType){
+                switch (eventType) {
 
                     case XmlPullParser.START_DOCUMENT:
                         break;
                     case XmlPullParser.START_TAG:
 
-                        if (parser.getName().equals("int")){
+                        if (parser.getName().equals("int")) {
 
-                            eventType=parser.next();
-                            result=Integer.parseInt(parser.getText());
+                            eventType = parser.next();
+                            result = Integer.parseInt(parser.getText());
                         }
                         break;
                 }
 
-                eventType=parser.next();
+                eventType = parser.next();
             }
 
-        }finally {
+        } finally {
 
             is.close();
         }

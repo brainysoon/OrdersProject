@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fat246.orders.R;
-import com.fat246.orders.application.MyApplication;
+import com.fat246.orders.MyApplication;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.manager.AutoUpdateManager;
 import com.fat246.orders.utils.BottomBarUtils;

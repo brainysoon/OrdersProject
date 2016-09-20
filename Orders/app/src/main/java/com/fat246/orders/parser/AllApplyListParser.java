@@ -120,7 +120,7 @@ public class AllApplyListParser {
                             eventType = parser.next();
                             String str = parser.getText();
                             Log.e("here", "comes---" + str);
-                            switch (i % 4) {
+                            switch (i % 5) {
 
                                 case 0:
                                     PRHS_ID = str;

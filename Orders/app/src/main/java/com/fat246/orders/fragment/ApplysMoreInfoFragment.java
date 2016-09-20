@@ -14,9 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fat246.orders.R;
-import com.fat246.orders.application.MyApplication;
+import com.fat246.orders.MyApplication;
 import com.fat246.orders.bean.ApplyInfo;
-import com.fat246.orders.bean.ApplyMoreInfo;
 import com.fat246.orders.bean.ApplyMoreInfoListItem;
 import com.fat246.orders.parser.ApplysMoreInfoListParser;
 

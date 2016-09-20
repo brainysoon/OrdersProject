@@ -28,7 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.fat246.orders.R;
 import com.fat246.orders.activity.MoreInfo;
 import com.fat246.orders.activity.OrderStandInfoActivity;
-import com.fat246.orders.application.MyApplication;
+import com.fat246.orders.MyApplication;
 import com.fat246.orders.bean.OrderInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllOrdersListParser;

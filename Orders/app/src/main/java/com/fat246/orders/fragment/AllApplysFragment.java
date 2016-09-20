@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.fat246.orders.R;
 import com.fat246.orders.activity.MoreInfo;
-import com.fat246.orders.application.MyApplication;
+import com.fat246.orders.MyApplication;
 import com.fat246.orders.bean.ApplyInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllApplyListParser;

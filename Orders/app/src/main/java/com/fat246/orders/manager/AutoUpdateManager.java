@@ -14,7 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.fat246.orders.BuildConfig;
 import com.fat246.orders.R;
-import com.fat246.orders.application.MyApplication;
+import com.fat246.orders.MyApplication;
 import com.fat246.orders.utils.ConnectivityUtils;
 import com.fat246.orders.utils.PreferencesUtility;
 

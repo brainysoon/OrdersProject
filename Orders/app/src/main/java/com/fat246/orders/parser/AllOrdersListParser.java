@@ -80,9 +80,6 @@ public class AllOrdersListParser {
             mOrdersList = new ArrayList<>();
         }
 
-        //添加一点 车市数据
-        mOrdersList.add(new OrderInfo("id", "dd", "na", false));
-
         return mOrdersList;
     }
 
