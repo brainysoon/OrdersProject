@@ -37,7 +37,7 @@ public class AllApplyListParser {
     public List<ApplyInfo> getAllApplyList() {
 
         //保存重网页上面下载 下来的 xml数据
-        List<ApplyInfo> mApplyList = sendGetAllApplyListPost("autId=" + (isLoadPassed ? 0 : 4) + "&startRow=1&endRow=20");
+        List<ApplyInfo> mApplyList = sendGetAllApplyListPost("autId=" + (isLoadPassed ? 4 : 1) + "&startRow=1&endRow=20");
 
         return mApplyList;
     }
@@ -152,7 +152,7 @@ public class AllApplyListParser {
 
                                     //添加到  mOrdersList
                                     Log.e("++add", "add to list");
-                                    mApplyList.add(new ApplyInfo(PRHS_ID, DEP_NAME, PSD_NAME, PSR_NAME,IS_PASSED_STR.equals("4")));
+                                    mApplyList.add(new ApplyInfo(PRHS_ID, DEP_NAME, PSD_NAME, PSR_NAME, IS_PASSED_STR.equals("4")));
 
                                     break;
                             }
