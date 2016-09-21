@@ -8,14 +8,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.fat246.orders.MyApplication;
 import com.fat246.orders.R;
 import com.fat246.orders.activity.MoreInfo;
-import com.fat246.orders.MyApplication;
 import com.fat246.orders.bean.ApplyInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllApplyListParser;
@@ -40,6 +42,9 @@ public class AllApplysFragment extends Fragment {
 
     //ListView
     private ListView mListView;
+
+    //BottomButton
+    private Button btmButtom;
 
     //同样的  数据集合
     private List<ApplyInfo> mList = new ArrayList<>();
@@ -108,6 +113,9 @@ public class AllApplysFragment extends Fragment {
     public void setList(View rootView) {
 
         mListView = (ListView) rootView.findViewById(R.id.ptr_list_all_applys);
+
+        btmButtom = (Button) rootView.findViewById(R.id.add_more_applys);
+
         mListView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
@@ -166,6 +174,34 @@ public class AllApplysFragment extends Fragment {
             }
         });
 
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+                //当没在底部的时候 设置为不可见
+                if ((i + i1) < i2) {
+
+                    if (btmButtom.getVisibility() != View.GONE) {
+
+                        btmButtom.setVisibility(View.GONE);
+                    }
+
+                }
+
+                //当在底部的时候 和有数据的时候 设置为可见
+                else if (i2 != 0 && (i + i1) == i2) {
+
+                    if (btmButtom.getVisibility() != View.VISIBLE) {
+
+                        btmButtom.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
     }
 
     //包装的下拉刷新

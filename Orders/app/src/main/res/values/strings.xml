@@ -100,4 +100,7 @@
     <string name="maintain">维护者</string>
     <string name="judge">审批人</string>
 
+    <!--申请单相关-->
+    <string name="add_more_on_click">点击加载更多</string>
+
 </resources>
