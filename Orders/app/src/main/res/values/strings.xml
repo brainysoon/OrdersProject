@@ -102,5 +102,6 @@
 
     <!--申请单相关-->
     <string name="add_more_on_click">点击加载更多</string>
+    <string name="laod_succeed">加载成功</string>
 
 </resources>

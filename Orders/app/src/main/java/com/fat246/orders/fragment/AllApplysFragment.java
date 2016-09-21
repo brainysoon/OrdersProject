@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fat246.orders.MyApplication;
 import com.fat246.orders.R;
@@ -42,6 +43,10 @@ public class AllApplysFragment extends Fragment {
 
     //ListView
     private ListView mListView;
+    private BaseAdapter mAdapter;
+
+    //start
+    private int start = 0;
 
     //BottomButton
     private Button btmButtom;
@@ -116,46 +121,9 @@ public class AllApplysFragment extends Fragment {
 
         btmButtom = (Button) rootView.findViewById(R.id.add_more_applys);
 
-        mListView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return mList.size();
-            }
+        mAdapter = new ApplysAdapter();
 
-            @Override
-            public Object getItem(int position) {
-                return mList.get(position);
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                if (convertView == null) {
-
-                    LayoutInflater mInflater = LayoutInflater.from(getActivity());
-                    convertView = mInflater.inflate(R.layout.fragment_all_applys_item, null);
-
-                    TextView mPRHS_ID = (TextView) convertView.findViewById(R.id.all_applys_prhs_id);
-                    TextView mDEP_NAME = (TextView) convertView.findViewById(R.id.all_applys_dep_name);
-                    TextView mPSD_NAME = (TextView) convertView.findViewById(R.id.all_applys_psd_name);
-                    TextView mPSR_NAME = (TextView) convertView.findViewById(R.id.all_applys_psr_name);
-
-                    ApplyInfo mAF = mList.get(position);
-                    mPRHS_ID.append(mAF.getPRHS_ID());
-                    mDEP_NAME.append(mAF.getDEP_NAME());
-                    mPSD_NAME.append(mAF.getPSD_NAME());
-                    mPSR_NAME.append(mAF.getPSR_NAME());
-
-                }
-
-                return convertView;
-            }
-        });
+        mListView.setAdapter(mAdapter);
 
         //Item 单击事件
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -200,6 +168,16 @@ public class AllApplysFragment extends Fragment {
                         btmButtom.setVisibility(View.VISIBLE);
                     }
                 }
+            }
+        });
+
+        //BtmClick
+        btmButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //加载更多数据
+                new AddMoreApplysAsyncTask(ALLORDERSLIST_URL, start, start + 20).execute(mUserInfo);
             }
         });
     }
@@ -264,7 +242,100 @@ public class AllApplysFragment extends Fragment {
 
             mList = applyInfos;
 
+            start = applyInfos.size();
+
             this.frame.refreshComplete();
+
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    //加载更多
+    private class AddMoreApplysAsyncTask extends AsyncTask<UserInfo, Void, List<ApplyInfo>> {
+
+        //URL
+        private String URL_Str;
+
+        private int start;
+        private int end;
+
+        public AddMoreApplysAsyncTask(String URL_Str, int start, int end) {
+
+            this.URL_Str = URL_Str;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        protected List<ApplyInfo> doInBackground(UserInfo... userInfos) {
+
+            //下载并解析
+            return new AllApplyListParser(isLoadPassed, URL_Str).getAllApplyList(start, end);
+        }
+
+        @Override
+        protected void onPostExecute(List<ApplyInfo> applyInfos) {
+
+            for (int i = 0; i < applyInfos.size(); i++) {
+
+                mList.add(applyInfos.get(i));
+            }
+
+            if (btmButtom.getVisibility() != View.GONE) {
+
+
+                btmButtom.setVisibility(View.GONE);
+            }
+
+            //显示加载成功
+            if (getContext() != null) {
+
+                Toast.makeText(getContext(), R.string.laod_succeed, Toast.LENGTH_SHORT).show();
+            }
+
+            start += applyInfos.size();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class ApplysAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return mList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if (convertView == null) {
+
+                LayoutInflater mInflater = LayoutInflater.from(getActivity());
+                convertView = mInflater.inflate(R.layout.fragment_all_applys_item, null);
+
+                TextView mPRHS_ID = (TextView) convertView.findViewById(R.id.all_applys_prhs_id);
+                TextView mDEP_NAME = (TextView) convertView.findViewById(R.id.all_applys_dep_name);
+                TextView mPSD_NAME = (TextView) convertView.findViewById(R.id.all_applys_psd_name);
+                TextView mPSR_NAME = (TextView) convertView.findViewById(R.id.all_applys_psr_name);
+
+                ApplyInfo mAF = mList.get(position);
+                mPRHS_ID.append(mAF.getPRHS_ID());
+                mDEP_NAME.append(mAF.getDEP_NAME());
+                mPSD_NAME.append(mAF.getPSD_NAME());
+                mPSR_NAME.append(mAF.getPSR_NAME());
+
+            }
+
+            return convertView;
         }
     }
 }
