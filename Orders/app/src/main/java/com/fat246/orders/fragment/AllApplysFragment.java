@@ -1,10 +1,14 @@
 package com.fat246.orders.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,6 +119,43 @@ public class AllApplysFragment extends Fragment {
         return UserInfo.getData(getActivity());
     }
 
+    private void showPopupWindow(View v, int position) {
+
+        //首先出事话内容
+        View contentView = LayoutInflater.from(getActivity())
+                .inflate(R.layout.popupwindow_layout, null);
+
+        final PopupWindow mPop = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+        //设置监听事件
+        setLisenler(contentView, v, mPop, position);
+
+        mPop.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+
+        mPop.setTouchable(true);
+
+        //为了使其显示在上方
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mPop.showAsDropDown(v, 25, -v.getHeight(), Gravity.CENTER);
+        } else {
+            mPop.showAsDropDown(v, 25, -v.getHeight());
+        }
+    }
+
+    //设置popupwindow　的监听事件
+    private void setLisenler(View contentView, final View item, final PopupWindow mPop,
+                             final int position) {
+
+        //四个按钮
+        Button standInfo = (Button) contentView.findViewById(R.id.popupwindow_stand_info);
+        Button timeInfo = (Button) contentView.findViewById(R.id.popupwindow_time_info);
+        Button progressInfo = (Button) contentView.findViewById(R.id.popupwindow_progress_info);
+        Button slectionState = (Button) contentView.findViewById(R.id.popupwindow_slection_state);
+
+    }
+
     //设置一些
     public void setList(View rootView) {
 
@@ -178,6 +220,17 @@ public class AllApplysFragment extends Fragment {
 
                 //加载更多数据
                 new AddMoreApplysAsyncTask(ALLORDERSLIST_URL, start, start + 20).execute(mUserInfo);
+            }
+        });
+
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                //显示 popupWindow
+                showPopupWindow(view, i);
+
+                return true;
             }
         });
     }
