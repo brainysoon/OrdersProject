@@ -45,6 +45,10 @@ public class MyApplication extends Application {
     private static final String ORDER_STAND_INFO = "orderstandinfo";
     private static final String ORDER_STAND_INFO_URL = PRE_URL + "//" + ORDER_STAND_INFO;
 
+    //申请单时间地址
+    private static final String APPLYDATEINFO_SERVER = "getApplyDateInfor";
+    private static final String APPLYDATEINFO_URL = PRE_URL + "//" + APPLYDATEINFO_SERVER;
+
     //官方网站
     private static final String OFFICIAL_WEBSITE = "http://www.fat246.com";
 
@@ -132,6 +136,11 @@ public class MyApplication extends Application {
     //返回申请单详细信息地址
     public static String getApplysmoreinfolistUrl() {
         return APPLYSMOREINFOLIST_URL;
+    }
+
+    //返回申请单时间地址
+    public static String getApplydateinfoUrl() {
+        return APPLYDATEINFO_URL;
     }
 
     //获得登陆的地址
