@@ -157,6 +157,12 @@ public class AllApplysFragment extends Fragment {
         Button progressInfo = (Button) contentView.findViewById(R.id.popupwindow_progress_info);
         Button slectionState = (Button) contentView.findViewById(R.id.popupwindow_slection_state);
 
+        //
+        if (isLoadPassed) {
+
+            slectionState.setText(R.string.popupwindow_slection_state_not);
+        }
+
         timeInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,7 +270,7 @@ public class AllApplysFragment extends Fragment {
             public void onRefreshBegin(PtrFrameLayout frame) {
 
                 //异步刷新加载数据
-                new AllApplysAsyncTask(frame, ALLORDERSLIST_URL).execute(mUserInfo);
+                new AllApplysAsyncTask(frame, ALLORDERSLIST_URL, isLoadPassed).execute(mUserInfo);
             }
         });
 
@@ -292,17 +298,20 @@ public class AllApplysFragment extends Fragment {
         //URL
         private String URL_Str;
 
-        public AllApplysAsyncTask(PtrFrameLayout frame, String URL_Str) {
+        private boolean flag;
+
+        public AllApplysAsyncTask(PtrFrameLayout frame, String URL_Str, boolean flag) {
 
             this.frame = frame;
             this.URL_Str = URL_Str;
+            this.flag = flag;
         }
 
         @Override
         protected List<ApplyInfo> doInBackground(UserInfo... params) {
 
             //下载并解析
-            return new AllApplyListParser(isLoadPassed, URL_Str).getAllApplyList();
+            return new AllApplyListParser(flag, URL_Str).getAllApplyList();
         }
 
         @Override
@@ -310,7 +319,7 @@ public class AllApplysFragment extends Fragment {
 
             mList = applyInfos;
 
-            start = applyInfos.size();
+            start = applyInfos.size() + 1;
 
             this.frame.refreshComplete();
 
@@ -361,7 +370,7 @@ public class AllApplysFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.laod_succeed, Toast.LENGTH_SHORT).show();
             }
 
-            start += applyInfos.size();
+            start += applyInfos.size() + 1;
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -458,6 +467,27 @@ public class AllApplysFragment extends Fragment {
 
                 builder.create().show();
             }
+        }
+    }
+
+    //撤销审批
+    private class ApprovalApply extends AsyncTask<String, Void, Integer> {
+
+        private String authName;
+
+        private String URL_Str;
+
+        public ApprovalApply(String authName, String URL_Str) {
+
+            this.authName = authName;
+            this.URL_Str = URL_Str;
+        }
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+
+
+            return null;
         }
     }
 }

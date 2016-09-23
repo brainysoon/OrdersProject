@@ -37,7 +37,7 @@ public class AllApplyListParser {
     public List<ApplyInfo> getAllApplyList() {
 
         //保存重网页上面下载 下来的 xml数据
-        List<ApplyInfo> mApplyList = sendGetAllApplyListPost("autId=" + (isLoadPassed ? 4 : 1) +
+        List<ApplyInfo> mApplyList = sendGetAllApplyListPost("autId=" + (isLoadPassed ? 4 : 0) +
                 "&startRow=1&endRow=20");
 
         return mApplyList;
@@ -47,7 +47,7 @@ public class AllApplyListParser {
     public List<ApplyInfo> getAllApplyList(int start, int end) {
 
         //保存重网页上面下载 下来的 xml数据
-        List<ApplyInfo> mApplyList = sendGetAllApplyListPost("autId=" + (isLoadPassed ? 4 : 1) +
+        List<ApplyInfo> mApplyList = sendGetAllApplyListPost("autId=" + (isLoadPassed ? 4 : 0) +
                 "&startRow=" + start + "&endRow=" + end);
 
         return mApplyList;

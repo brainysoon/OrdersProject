@@ -7,59 +7,59 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="@dimen/popupwindow_height"
-        android:orientation="horizontal"
         android:layout_margin="@dimen/item_margin"
-        >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/popupwindow_stand_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:text="@string/popupwindow_stand_info"
             android:textColor="@color/white"
-            android:background="@null"/>
+            android:textSize="@dimen/popupwindow_textsize" />
 
         <View
-            android:layout_width="2px"
+            android:layout_width="@dimen/popupwindow_line_width"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            />
+            android:background="@color/white" />
 
         <Button
             android:id="@+id/popupwindow_time_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:text="@string/popupwindow_time_info"
             android:textColor="@color/white"
-            android:background="@null"/>
+            android:textSize="@dimen/popupwindow_textsize" />
 
         <View
-            android:layout_width="2px"
+            android:layout_width="@dimen/popupwindow_line_width"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            />
+            android:background="@color/white" />
 
         <Button
             android:id="@+id/popupwindow_progress_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:text="@string/popupwindow_progress_info"
             android:textColor="@color/white"
-            android:background="@null"/>
+            android:textSize="@dimen/popupwindow_textsize" />
 
         <View
-            android:layout_width="2px"
+            android:layout_width="@dimen/popupwindow_line_width"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            />
+            android:background="@color/white" />
 
         <Button
             android:id="@+id/popupwindow_slection_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:text="@string/popupwindow_slection_state"
             android:textColor="@color/white"
-            android:background="@null"/>
+            android:textSize="@dimen/popupwindow_textsize" />
 
     </LinearLayout>
 </LinearLayout>

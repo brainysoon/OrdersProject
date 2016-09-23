@@ -72,6 +72,7 @@
     <string name="popupwindow_time_info">时间信息</string>
     <string name="popupwindow_progress_info">完成情况</string>
     <string name="popupwindow_slection_state">审批</string>
+    <string name="popupwindow_slection_state_not">撤销审批</string>
 
     <!--订单详细信息-->
     <string name="order_more_info_list_item_MATE_Code">MATE_Code:</string>
