@@ -49,6 +49,10 @@ public class MyApplication extends Application {
     private static final String APPLYDATEINFO_SERVER = "getApplyDateInfor";
     private static final String APPLYDATEINFO_URL = PRE_URL + "//" + APPLYDATEINFO_SERVER;
 
+    //审批申请单
+    private static final String APPROVALAPPLY_SERVER = "setApplyApproval";
+    private static final String APPROVALAPPLY_URL = PRE_URL + "//" + APPROVALAPPLY_SERVER;
+
     //官方网站
     private static final String OFFICIAL_WEBSITE = "http://www.fat246.com";
 
@@ -141,6 +145,11 @@ public class MyApplication extends Application {
     //返回申请单时间地址
     public static String getApplydateinfoUrl() {
         return APPLYDATEINFO_URL;
+    }
+
+    //返回设置审批的地址
+    public static String getApprovalapplyUrl() {
+        return APPROVALAPPLY_URL;
     }
 
     //获得登陆的地址

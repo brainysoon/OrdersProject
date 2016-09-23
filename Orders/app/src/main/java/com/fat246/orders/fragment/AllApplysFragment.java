@@ -30,6 +30,7 @@ import com.fat246.orders.bean.ApplyInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllApplyListParser;
 import com.fat246.orders.parser.ApplyDataInfoParser;
+import com.fat246.orders.parser.ApprovalApplyParser;
 import com.fat246.orders.widget.Ptr.PtrClassicFrameLayout;
 import com.fat246.orders.widget.Ptr.PtrDefaultHandler;
 import com.fat246.orders.widget.Ptr.PtrFrameLayout;
@@ -162,6 +163,23 @@ public class AllApplysFragment extends Fragment {
 
             slectionState.setText(R.string.popupwindow_slection_state_not);
         }
+
+        slectionState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (isLoadPassed) {
+
+                } else {
+
+                    new ApprovalApply(MyApplication.mUser.getmUser(),
+                            MyApplication.getApprovalapplyUrl())
+                            .execute(mList.get(position).getPRHS_ID());
+                }
+
+                mPop.dismiss();
+            }
+        });
 
         timeInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -486,8 +504,30 @@ public class AllApplysFragment extends Fragment {
         @Override
         protected Integer doInBackground(String... strings) {
 
+            return ApprovalApplyParser.getApprovalApplyParser(authName, strings[0], URL_Str);
+        }
 
-            return null;
+        @Override
+        protected void onPostExecute(Integer integer) {
+
+            String str = "未知错误";
+
+            switch (integer) {
+
+                case 1:
+                    str = "审批成功";
+                    break;
+                case 2:
+                    str = "审批操作失败";
+                    break;
+                case 3:
+                    str = "审批信息变化，不能操作";
+            }
+
+            if (getContext() != null) {
+
+                Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
