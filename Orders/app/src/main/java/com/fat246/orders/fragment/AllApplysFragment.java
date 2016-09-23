@@ -170,6 +170,9 @@ public class AllApplysFragment extends Fragment {
 
                 if (isLoadPassed) {
 
+                    new ApprovalApply(MyApplication.mUser.getmUser(),
+                            MyApplication.getApprovalcancleapplyServer())
+                            .execute(mList.get(position).getPRHS_ID());
                 } else {
 
                     new ApprovalApply(MyApplication.mUser.getmUser(),
@@ -512,16 +515,32 @@ public class AllApplysFragment extends Fragment {
 
             String str = "未知错误";
 
-            switch (integer) {
+            if (isLoadPassed) {
 
-                case 1:
-                    str = "审批成功";
-                    break;
-                case 2:
-                    str = "审批操作失败";
-                    break;
-                case 3:
-                    str = "审批信息变化，不能操作";
+                switch (integer) {
+
+                    case 1:
+                        str = "取消审批成功";
+                        break;
+                    case 2:
+                        str = "取消审批操作";
+                        break;
+                    case 3:
+                        str = "已安排采购，不能操作";
+                }
+            } else {
+
+                switch (integer) {
+
+                    case 1:
+                        str = "审批成功";
+                        break;
+                    case 2:
+                        str = "审批操作失败";
+                        break;
+                    case 3:
+                        str = "审批信息变化，不能操作";
+                }
             }
 
             if (getContext() != null) {
