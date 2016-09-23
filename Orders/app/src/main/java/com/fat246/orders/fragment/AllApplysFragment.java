@@ -245,7 +245,8 @@ public class AllApplysFragment extends Fragment {
                 }
 
                 //当在底部的时候 和有数据的时候 设置为可见
-                else if (i2 != 0 && (i + i1) == i2) {
+                // i firstVisibleItem,i1 visibleItemCount, i2 totalItemCount
+                else if (i2 != 0 && (i + i1) == i2 && (i1 < i2)) {
 
                     if (btmButtom.getVisibility() != View.VISIBLE) {
 
