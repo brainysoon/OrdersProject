@@ -165,6 +165,8 @@ public class AllApplysFragment extends Fragment {
 
                 new ApplyDateInfo(MyApplication.getApplydateinfoUrl())
                         .execute(mList.get(position).getPRHS_ID());
+
+                mPop.dismiss();
             }
         });
     }
