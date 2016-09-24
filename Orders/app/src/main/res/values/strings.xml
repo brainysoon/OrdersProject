@@ -104,5 +104,12 @@
     <!--申请单相关-->
     <string name="add_more_on_click">点击加载更多</string>
     <string name="laod_succeed">加载成功</string>
+    <string name="title_activity_apply_finals">申请单落实情况</string>
+
+    <!--ApplyFinal-->
+    <string name="mate_code">材料代码 ：</string>
+    <string name="mate_name">材料名称 ：</string>
+    <string name="apply_finals">申请单数量 ：</string>
+    <string name="order_finals">订单数量 ：</string>
 
 </resources>

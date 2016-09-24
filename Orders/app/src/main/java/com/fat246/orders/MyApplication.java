@@ -57,6 +57,10 @@ public class MyApplication extends Application {
     private static final String APPROVALCANCLEAPPLY_SERVER = "setApplyApprovalCancel";
     private static final String APPROVALCANCLEAPPLY_URL = PRE_URL + "//" + APPROVALCANCLEAPPLY_SERVER;
 
+    //申请单落实情况地址
+    private static final String APPLYFINALS_SERVER = "getApplyFinal";
+    private static final String APPLYFINALS_URL = PRE_URL + "//" + APPLYFINALS_SERVER;
+
     //官方网站
     private static final String OFFICIAL_WEBSITE = "http://www.fat246.com";
 
@@ -159,6 +163,11 @@ public class MyApplication extends Application {
     //返回取消审批的地址
     public static String getApprovalcancleapplyServer() {
         return APPROVALCANCLEAPPLY_URL;
+    }
+
+    //返回申请单落实情况
+    public static String getApplyfinalsUrl() {
+        return APPLYFINALS_URL;
     }
 
     //获得登陆的地址

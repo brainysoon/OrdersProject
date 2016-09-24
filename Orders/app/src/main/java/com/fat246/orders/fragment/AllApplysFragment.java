@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.fat246.orders.MyApplication;
 import com.fat246.orders.R;
+import com.fat246.orders.activity.ApplyFinalsActivity;
 import com.fat246.orders.activity.MoreInfo;
 import com.fat246.orders.bean.ApplyInfo;
 import com.fat246.orders.bean.UserInfo;
@@ -192,6 +193,20 @@ public class AllApplysFragment extends Fragment {
 
                 new ApplyDateInfo(MyApplication.getApplydateinfoUrl())
                         .execute(mList.get(position).getPRHS_ID());
+
+                mPop.dismiss();
+            }
+        });
+
+        progressInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), ApplyFinalsActivity.class);
+
+                intent.putExtra(ApplyFinalsActivity.APPLY_ID, mList.get(position).getPRHS_ID());
+
+                getActivity().startActivity(intent);
 
                 mPop.dismiss();
             }
