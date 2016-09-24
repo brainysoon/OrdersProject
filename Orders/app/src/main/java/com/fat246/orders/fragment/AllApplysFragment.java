@@ -547,6 +547,8 @@ public class AllApplysFragment extends Fragment {
             if (getContext() != null) {
 
                 Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+
+                mPtrFrame.autoRefresh();
             }
         }
     }
