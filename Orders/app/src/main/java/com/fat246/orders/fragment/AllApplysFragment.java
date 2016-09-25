@@ -31,6 +31,7 @@ import com.fat246.orders.bean.ApplyInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllApplyListParser;
 import com.fat246.orders.parser.ApplyDataInfoParser;
+import com.fat246.orders.parser.ApplyInfoParser;
 import com.fat246.orders.parser.ApprovalApplyParser;
 import com.fat246.orders.widget.Ptr.PtrClassicFrameLayout;
 import com.fat246.orders.widget.Ptr.PtrDefaultHandler;
@@ -207,6 +208,19 @@ public class AllApplysFragment extends Fragment {
                 intent.putExtra(ApplyFinalsActivity.APPLY_ID, mList.get(position).getPRHS_ID());
 
                 getActivity().startActivity(intent);
+
+                mPop.dismiss();
+            }
+        });
+
+        standInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getContext(), "正在查询。。。", Toast.LENGTH_SHORT).show();
+
+                new ApplyInfoAsyncTask(MyApplication.getApplyinfoUrl())
+                        .execute(mList.get(position).getPRHS_ID());
 
                 mPop.dismiss();
             }
@@ -564,6 +578,59 @@ public class AllApplysFragment extends Fragment {
                 Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
 
                 mPtrFrame.autoRefresh();
+            }
+        }
+    }
+
+    //加载基本信息
+    private class ApplyInfoAsyncTask extends AsyncTask<String, Void, List<String>> {
+
+        private String URL_Str;
+
+        public ApplyInfoAsyncTask(String URL_Str) {
+
+            this.URL_Str = URL_Str;
+        }
+
+        @Override
+        protected List<String> doInBackground(String... strings) {
+            return ApplyInfoParser.getApplyInfo(strings[0], URL_Str);
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+
+            String[] str = new String[strings.size()];
+
+            for (int i = 0; i < strings.size(); i++) {
+
+                str[i] = strings.get(i);
+            }
+
+            if (getContext() != null && str.length > 0) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("订单基本信息");
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setItems(str, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setCancelable(false);
+
+                builder.create().show();
             }
         }
     }
