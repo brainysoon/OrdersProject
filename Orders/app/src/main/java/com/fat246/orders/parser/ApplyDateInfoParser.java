@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by ken on 16-9-22.
  */
-public class ApplyDataInfoParser {
+public class ApplyDateInfoParser {
 
     public static List<String> getApplyDataInfo(String ApplyId, String URL_Str) {
 

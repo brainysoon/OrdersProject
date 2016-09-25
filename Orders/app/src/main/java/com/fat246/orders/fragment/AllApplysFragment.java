@@ -30,7 +30,7 @@ import com.fat246.orders.activity.MoreInfo;
 import com.fat246.orders.bean.ApplyInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllApplyListParser;
-import com.fat246.orders.parser.ApplyDataInfoParser;
+import com.fat246.orders.parser.ApplyDateInfoParser;
 import com.fat246.orders.parser.ApplyInfoParser;
 import com.fat246.orders.parser.ApprovalApplyParser;
 import com.fat246.orders.widget.Ptr.PtrClassicFrameLayout;
@@ -480,7 +480,7 @@ public class AllApplysFragment extends Fragment {
         @Override
         protected List<String> doInBackground(String... strings) {
 
-            return ApplyDataInfoParser.getApplyDataInfo(strings[0], URL_Str);
+            return ApplyDateInfoParser.getApplyDataInfo(strings[0], URL_Str);
         }
 
         @Override
