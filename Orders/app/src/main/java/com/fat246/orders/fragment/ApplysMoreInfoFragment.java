@@ -13,12 +13,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.fat246.orders.R;
 import com.fat246.orders.MyApplication;
+import com.fat246.orders.R;
 import com.fat246.orders.bean.ApplyInfo;
 import com.fat246.orders.bean.ApplyMoreInfoListItem;
 import com.fat246.orders.parser.ApplysMoreInfoListParser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,13 +34,13 @@ public class ApplysMoreInfoFragment extends Fragment {
     private ListView mList;
 
     //DataList
-    private List<ApplyMoreInfoListItem> mDataList;
+    private List<ApplyMoreInfoListItem> mDataList = new ArrayList<>();
 
     //申请单信息
     private ApplyInfo mApplyInfo;
 
     //适配器
-    private BaseAdapter mAdapter=new ApplysMoreInfoAdapter();
+    private BaseAdapter mAdapter = new ApplysMoreInfoAdapter();
 
 
     public ApplysMoreInfoFragment() {
@@ -51,24 +52,24 @@ public class ApplysMoreInfoFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_applys_more_info, container, false);
 
-        mList=(ListView)rootView.findViewById(R.id.apply_more_info_list);
+        mList = (ListView) rootView.findViewById(R.id.apply_more_info_list);
         mList.setAdapter(mAdapter);
 
         //设置 ID Location
         setData();
 
         //异步
-        new ApplysMoreInfoAsyncTask(rootView,mAdapter).execute(mApplyInfo);
+        new ApplysMoreInfoAsyncTask(rootView, mAdapter).execute(mApplyInfo);
 
         return rootView;
     }
 
-    public void setData(){
+    public void setData() {
 
-        Bundle mBundle=getArguments();
+        Bundle mBundle = getArguments();
 
-        mApplyInfo=new ApplyInfo(mBundle.getString("ID","null"));
-        this.Location=mBundle.getInt("Location",0);
+        mApplyInfo = new ApplyInfo(mBundle.getString("ID", "null"));
+        this.Location = mBundle.getInt("Location", 0);
     }
 
     //异步加载数据
@@ -79,23 +80,23 @@ public class ApplysMoreInfoFragment extends Fragment {
 
         private BaseAdapter mAdapter;
 
-        public ApplysMoreInfoAsyncTask(View rootView,BaseAdapter mAdapter) {
+        public ApplysMoreInfoAsyncTask(View rootView, BaseAdapter mAdapter) {
 
             this.rootView = rootView;
-            this.mAdapter=mAdapter;
+            this.mAdapter = mAdapter;
         }
 
         @Override
         protected List<ApplyMoreInfoListItem> doInBackground(ApplyInfo... params) {
 
-            return new ApplysMoreInfoListParser(MyApplication.getApplysmoreinfolistUrl(),mApplyInfo).getApplysMoreInfoList();
+            return new ApplysMoreInfoListParser(MyApplication.getApplysmoreinfolistUrl(), mApplyInfo).getApplysMoreInfoList();
         }
 
         @Override
         protected void onPostExecute(List<ApplyMoreInfoListItem> applyMoreInfoList) {
 
             //设置UI
-            mDataList=applyMoreInfoList;
+            mDataList = applyMoreInfoList;
 //            mAdapter.notify();
 
             //关闭进度条的显示
@@ -103,12 +104,12 @@ public class ApplysMoreInfoFragment extends Fragment {
             mProgressBar.setVisibility(View.GONE);
 
             //LinearLayout 可见
-            LinearLayout mLinearLayout=(LinearLayout)rootView.findViewById(R.id.applys_more_info_linear_layout);
+            LinearLayout mLinearLayout = (LinearLayout) rootView.findViewById(R.id.applys_more_info_linear_layout);
             mLinearLayout.setVisibility(View.VISIBLE);
         }
     }
 
-    class ApplysMoreInfoAdapter extends BaseAdapter{
+    class ApplysMoreInfoAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -129,31 +130,43 @@ public class ApplysMoreInfoFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             //LayoutInflater
-            LayoutInflater layoutInflater=LayoutInflater.from(getActivity());
-            convertView=layoutInflater.inflate(R.layout.applys_more_info_list_item,null);
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            convertView = layoutInflater.inflate(R.layout.applys_more_info_list_item, null);
 
             //setData
-            setData(position,convertView);
+            setData(position, convertView);
 
             return convertView;
         }
 
-        private void setData(int position,View convertView){
+        private void setData(int position, View convertView) {
 
             //找到相应的View
-            TextView MATE_Code=(TextView)convertView.findViewById(R.id.apply_more_info_list_item_MATE_Code);
-            TextView MATE_Name=(TextView)convertView.findViewById(R.id.apply_more_info_list_item_MATE_Name);
-            TextView MATE_Size=(TextView)convertView.findViewById(R.id.apply_more_info_list_item_MATE_Size);
-            TextView PRHSD_AMNT=(TextView)convertView.findViewById(R.id.apply_more_info_list_item_PRHSD_AMNT);
-            TextView MATE_PRICEP=(TextView)convertView.findViewById(R.id.apply_more_info_list_item_MATE_PRICEP);
+            TextView MATE_Code = (TextView) convertView.findViewById(R.id.apply_more_info_list_item_MATE_Code);
+            TextView MATE_Name = (TextView) convertView.findViewById(R.id.apply_more_info_list_item_MATE_Name);
+            TextView MATE_Size = (TextView) convertView.findViewById(R.id.apply_more_info_list_item_MATE_Size);
+            TextView PRHSD_AMNT = (TextView) convertView.findViewById(R.id.apply_more_info_list_item_PRHSD_AMNT);
+            TextView MATE_PRICEP = (TextView) convertView.findViewById(R.id.apply_more_info_list_item_MATE_PRICEP);
+            TextView totle = (TextView) convertView.findViewById(R.id.apply_more_info_list_item_totle);
 
             //设置数据
-            ApplyMoreInfoListItem mItem=mDataList.get(position);
+            ApplyMoreInfoListItem mItem = mDataList.get(position);
             MATE_Code.append(mItem.getMATE_Code());
             MATE_Name.append(mItem.getMATE_Name());
             MATE_Size.append(mItem.getMATE_Size());
             PRHSD_AMNT.append(mItem.getPRHSD_AMNT());
             MATE_PRICEP.append(mItem.getMATE_PRICEP());
+
+            try {
+
+                double num = Double.parseDouble(mItem.getPRHSD_AMNT());
+                double price = Double.parseDouble(mItem.getMATE_PRICEP());
+
+                totle.append(((Double) (num * price)).shortValue() + "");
+            } catch (Exception e) {
+
+                totle.append("无法计算");
+            }
         }
     }
 }

@@ -87,12 +87,13 @@
     <string name="order_more_info_list_item_MATE_PRICEP">MATE_PRICEP:</string>
 
     <!--申请单详细信息-->
-    <string name="apply_more_info_list_item_MATE_Code">MATE_Code</string>
-    <string name="apply_more_info_list_item_MATE_Name">MATE_Name</string>
-    <string name="apply_more_info_list_item_MATE_Size">MATE_Size</string>
-    <string name="apply_more_info_list_item_PRHSD_AMNT">PRHSD_AMNT</string>
-    <string name="apply_more_info_list_item_MATE_PRICEP">MATE_PRICEP</string>
-    <string name="title_activity_order_stand_info">OrderStandInfoActivity</string>
+    <string name="apply_more_info_list_item_MATE_Code">材料代码：</string>
+    <string name="apply_more_info_list_item_MATE_Name">材料名称：</string>
+    <string name="apply_more_info_list_item_MATE_Size">规格：</string>
+    <string name="apply_more_info_list_item_PRHSD_AMNT">数量：</string>
+    <string name="apply_more_info_list_item_MATE_PRICEP">单价：</string>
+    <string name="title_activity_order_stand_info">订单详细信息</string>
+    <string name="apply_more_info_list_item_totle">总价：</string>
 
     <!--订单基本信息-->
     <string name="provider">供应商</string>
