@@ -100,7 +100,8 @@ public class AllOrdersListParser {
             int i = 0;
 
             //引用
-            String PRHSORD_ID = null, NAMEE = null, PRAC_NAME = null, IS_LOAD_PASSED_STR = null;
+            String PRHSORD_ID = null, NAMEE = null, PRAC_NAME = null,
+                    SUM = null, IS_LOAD_PASSED_STR = null;
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
 
@@ -114,7 +115,7 @@ public class AllOrdersListParser {
 
                             eventType = parser.next();
                             String str = parser.getText();
-                            switch (i % 4) {
+                            switch (i % 5) {
 
                                 case 0:
                                     PRHSORD_ID = str;
@@ -134,12 +135,23 @@ public class AllOrdersListParser {
 
                                 case 3:
 
+                                    SUM = str;
+                                    if (SUM == null) {
+
+                                        SUM = "";
+                                    }
+
+                                    break;
+
+                                case 4:
+
                                     IS_LOAD_PASSED_STR = str;
 
                                     if (IS_LOAD_PASSED_STR == null) IS_LOAD_PASSED_STR = "";
 
                                     //添加到  mOrdersList
-                                    mOrdersList.add(new OrderInfo(PRHSORD_ID, NAMEE, PRAC_NAME, IS_LOAD_PASSED_STR.equals("4")));
+                                    mOrdersList.add(new OrderInfo(PRHSORD_ID, NAMEE, PRAC_NAME,
+                                            SUM, IS_LOAD_PASSED_STR.equals("4")));
                                     break;
                             }
 

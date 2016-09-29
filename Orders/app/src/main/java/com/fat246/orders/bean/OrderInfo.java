@@ -19,6 +19,7 @@ public class OrderInfo {
     private String MATE_CODE;
     private String PRHS_SOUR;
     private String DEP_CODE;
+    private String SUM;
     private boolean IS_PASSED;
 
     public OrderInfo(String PRHSORD_ID, String NAMEE, String PRAC_NAME, boolean IS_PASSED) {
@@ -27,6 +28,13 @@ public class OrderInfo {
         this.PRHSORD_ID = PRHSORD_ID;
         this.NAMEE = NAMEE;
         this.PRAC_NAME = PRAC_NAME;
+    }
+
+    public OrderInfo(String PRHSORD_ID, String NAMEE, String PRAC_NAME,
+                     String SUM, boolean IS_PASSED) {
+        this(PRHSORD_ID, NAMEE, PRAC_NAME, IS_PASSED);
+
+        this.SUM = SUM;
     }
 
     //只包含ID的OrderInfo
@@ -55,5 +63,9 @@ public class OrderInfo {
     public boolean getIS_PASSED() {
 
         return this.IS_PASSED;
+    }
+
+    public String getSUM() {
+        return this.SUM;
     }
 }

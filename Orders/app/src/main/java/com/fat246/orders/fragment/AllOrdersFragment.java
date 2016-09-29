@@ -25,10 +25,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.fat246.orders.MyApplication;
 import com.fat246.orders.R;
 import com.fat246.orders.activity.MoreInfo;
 import com.fat246.orders.activity.OrderStandInfoActivity;
-import com.fat246.orders.MyApplication;
 import com.fat246.orders.bean.OrderInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllOrdersListParser;
@@ -151,7 +151,7 @@ public class AllOrdersFragment extends Fragment {
                 TextView mPRHSORD_ID = (TextView) convertView.findViewById(R.id.all_orders_prhsord_id);
                 TextView mNAMEE = (TextView) convertView.findViewById(R.id.all_orders_namee);
                 TextView mPRAC_NAME = (TextView) convertView.findViewById(R.id.all_orders_prac_name);
-                TextView mID = (TextView) convertView.findViewById(R.id.all_orders_id);
+                TextView mSUM = (TextView) convertView.findViewById(R.id.all_orders_sum);
 
                 OrderInfo mOI = mList.get(position);
 
@@ -159,9 +159,7 @@ public class AllOrdersFragment extends Fragment {
                 mPRHSORD_ID.append(mOI.getPRHSORD_ID());
                 mNAMEE.append(mOI.getNAMEE());
                 mPRAC_NAME.append(mOI.getPRAC_NAME());
-
-                //不知道加不加ID
-//                }
+                mSUM.append(mOI.getSUM());
 
                 return convertView;
             }
