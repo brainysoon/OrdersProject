@@ -1,5 +1,6 @@
 package com.fat246.orders.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,12 +14,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -55,6 +58,12 @@ public class AllOrdersFragment extends Fragment {
 
     //List控件
     private ListView mListView;
+
+    private Button btmButtom;
+
+    private OrdersAdapter mAdapter;
+
+    private int start = 0;
 
     //集合List
     private List<OrderInfo> mList = new ArrayList<>();
@@ -123,47 +132,12 @@ public class AllOrdersFragment extends Fragment {
     public void setList(View rootView) {
 
         mListView = (ListView) rootView.findViewById(R.id.ptr_list_all_orders);
-        mListView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return mList.size();
-            }
+        btmButtom = (Button) rootView.findViewById(R.id.add_more_orders);
 
-            @Override
-            public Object getItem(int position) {
-                return position;
-            }
+        mAdapter = new OrdersAdapter(this.getContext());
 
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
+        mListView.setAdapter(mAdapter);
 
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                //加了这个  就会 少加 很多 东西
-//                if (convertView == null) {
-
-                LayoutInflater mInflater = LayoutInflater.from(getActivity());
-                convertView = mInflater.inflate(R.layout.fragment_all_orders_item, null);
-
-                TextView mPRHSORD_ID = (TextView) convertView.findViewById(R.id.all_orders_prhsord_id);
-                TextView mNAMEE = (TextView) convertView.findViewById(R.id.all_orders_namee);
-                TextView mPRAC_NAME = (TextView) convertView.findViewById(R.id.all_orders_prac_name);
-                TextView mSUM = (TextView) convertView.findViewById(R.id.all_orders_sum);
-
-                OrderInfo mOI = mList.get(position);
-
-                Log.e("id", mOI.getPRHSORD_ID());
-                mPRHSORD_ID.append(mOI.getPRHSORD_ID());
-                mNAMEE.append(mOI.getNAMEE());
-                mPRAC_NAME.append(mOI.getPRAC_NAME());
-                mSUM.append(mOI.getSUM());
-
-                return convertView;
-            }
-        });
 
         //Item 单击事件
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -182,6 +156,36 @@ public class AllOrdersFragment extends Fragment {
             }
         });
 
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+                //当没在底部的时候 设置为不可见
+                if ((i + i1) < i2) {
+
+                    if (btmButtom.getVisibility() != View.GONE) {
+
+                        btmButtom.setVisibility(View.GONE);
+                    }
+
+                }
+
+                //当在底部的时候 和有数据的时候 设置为可见
+                // i firstVisibleItem,i1 visibleItemCount, i2 totalItemCount
+                else if (i2 != 0 && (i + i1) == i2 && (i1 < i2)) {
+
+                    if (btmButtom.getVisibility() != View.VISIBLE) {
+
+                        btmButtom.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
         //设置 常按的点击事件
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -191,6 +195,16 @@ public class AllOrdersFragment extends Fragment {
 
                 //不响应  点击事件
                 return true;
+            }
+        });
+
+        //BtmClick
+        btmButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //加载更多数据
+                new AddMoreOrdersAsyncTask(ALLORDERSLIST_URL, start, start + 20).execute(mUserInfo);
             }
         });
     }
@@ -338,7 +352,11 @@ public class AllOrdersFragment extends Fragment {
 
             mList = orderInfos;
 
+            start = orderInfos.size() + 1;
+
             frame.refreshComplete();
+
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -374,5 +392,101 @@ public class AllOrdersFragment extends Fragment {
         mRequest.setTag("setOrderApprovalRequest");
 
         MyApplication.getQueue().add(mRequest);
+    }
+
+    //加载更多
+    private class AddMoreOrdersAsyncTask extends AsyncTask<UserInfo, Void, List<OrderInfo>> {
+
+        //URL
+        private String URL_Str;
+
+        private int start;
+        private int end;
+
+        public AddMoreOrdersAsyncTask(String URL_Str, int start, int end) {
+
+            this.URL_Str = URL_Str;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        protected List<OrderInfo> doInBackground(UserInfo... userInfos) {
+
+            //下载并解析
+            return new AllOrdersListParser(isLoadPassed, URL_Str).getAllOrdersList(start, end);
+        }
+
+        @Override
+        protected void onPostExecute(List<OrderInfo> orderInfos) {
+
+            for (int i = 0; i < orderInfos.size(); i++) {
+
+                mList.add(orderInfos.get(i));
+            }
+
+            if (btmButtom.getVisibility() != View.GONE) {
+
+
+                btmButtom.setVisibility(View.GONE);
+            }
+
+            //显示加载成功
+            if (getContext() != null) {
+
+                Toast.makeText(getContext(), R.string.laod_succeed, Toast.LENGTH_SHORT).show();
+            }
+
+            start += orderInfos.size() + 1;
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class OrdersAdapter extends BaseAdapter {
+
+        private LayoutInflater layoutInflater;
+
+        public OrdersAdapter(Context context) {
+
+            layoutInflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+
+
+            LayoutInflater mInflater = LayoutInflater.from(getActivity());
+            view = mInflater.inflate(R.layout.fragment_all_orders_item, null);
+
+            TextView mPRHSORD_ID = (TextView) view.findViewById(R.id.all_orders_prhsord_id);
+            TextView mNAMEE = (TextView) view.findViewById(R.id.all_orders_namee);
+            TextView mPRAC_NAME = (TextView) view.findViewById(R.id.all_orders_prac_name);
+            TextView mSUM = (TextView) view.findViewById(R.id.all_orders_sum);
+
+            OrderInfo mOI = mList.get(i);
+
+            mPRHSORD_ID.append(mOI.getPRHSORD_ID());
+            mNAMEE.append(mOI.getNAMEE());
+            mPRAC_NAME.append(mOI.getPRAC_NAME());
+            mSUM.append(mOI.getSUM());
+
+
+            return view;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mList.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return mList.size();
+        }
     }
 }

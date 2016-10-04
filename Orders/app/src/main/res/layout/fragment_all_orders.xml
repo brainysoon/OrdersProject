@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.fat246.orders.widget.Ptr.PtrClassicFrameLayout
         android:id="@+id/ptr_all_orders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/cube_mints_f1f1f1"
         cube_ptr:ptr_duration_to_close="200"
         cube_ptr:ptr_duration_to_close_header="1000"
@@ -19,8 +21,15 @@
         <ListView
             android:id="@+id/ptr_list_all_orders"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
+            android:layout_height="match_parent" />
 
     </com.fat246.orders.widget.Ptr.PtrClassicFrameLayout>
-</RelativeLayout>
+
+    <Button
+        android:id="@+id/add_more_orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_more_on_click"
+        android:textColor="?attr/colorAccent"
+        android:visibility="gone" />
+</LinearLayout>

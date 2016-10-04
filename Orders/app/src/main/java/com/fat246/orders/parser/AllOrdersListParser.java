@@ -37,6 +37,15 @@ public class AllOrdersListParser {
         return mOrdersList;
     }
 
+    public List<OrderInfo> getAllOrdersList(int start, int end) {
+
+        //保存中网页服务上面加载下来的  xml数据
+        List<OrderInfo> mOrdersList = sendGetAllOrdersListPost("autId=" + (isLoadPassed ? 4 : 0)
+                + "&startRow=" + start + "&endRow=" + end);
+
+        return mOrdersList;
+    }
+
     //发送  post 请求
     private List<OrderInfo> sendGetAllOrdersListPost(String param) {
 
