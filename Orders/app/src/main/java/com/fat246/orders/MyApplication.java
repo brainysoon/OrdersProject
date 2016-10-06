@@ -12,7 +12,7 @@ import com.fat246.orders.bean.UserInfo;
 public class MyApplication extends Application {
 
     //表示服务器地址的一些全局变量
-    private static final String SERVER_IP = "192.168.0.157";
+    private static final String SERVER_IP = "192.168.1.127";
     private static final String SERVER_PORT = "8081";
     private static final String SERVER_NAME = "Service1.asmx";
     private static final String PRE_URL = "http://" + SERVER_IP + ":" + SERVER_PORT + "//" + SERVER_NAME;
