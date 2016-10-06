@@ -1,6 +1,8 @@
 package com.fat246.orders.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -35,6 +37,7 @@ import com.fat246.orders.activity.OrderStandInfoActivity;
 import com.fat246.orders.bean.OrderInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllOrdersListParser;
+import com.fat246.orders.parser.OrderDateInfoParser;
 import com.fat246.orders.widget.Ptr.PtrClassicFrameLayout;
 import com.fat246.orders.widget.Ptr.PtrDefaultHandler;
 import com.fat246.orders.widget.Ptr.PtrFrameLayout;
@@ -271,6 +274,12 @@ public class AllOrdersFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                Toast.makeText(getContext(), "正在查询。。。", Toast.LENGTH_SHORT).show();
+
+                new OrderDateInfo(MyApplication.getOrderdatainfoUrl())
+                        .execute(mList.get(position).getPRHSORD_ID());
+
+                mPop.dismiss();
             }
         });
 
@@ -487,6 +496,60 @@ public class AllOrdersFragment extends Fragment {
         @Override
         public int getCount() {
             return mList.size();
+        }
+    }
+
+    //加载时间
+    private class OrderDateInfo extends AsyncTask<String, Void, List<String>> {
+
+        private String URL_Str;
+
+        public OrderDateInfo(String URL_Str) {
+
+            this.URL_Str = URL_Str;
+        }
+
+        @Override
+        protected List<String> doInBackground(String... strings) {
+
+            return OrderDateInfoParser.getOrderDataInfo(strings[0], URL_Str);
+        }
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+
+            String[] str = new String[strings.size()];
+
+            for (int i = 0; i < strings.size(); i++) {
+
+                str[i] = strings.get(i);
+            }
+
+            if (getContext() != null && str.length > 0) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                builder.setTitle("订单时间信息");
+                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setItems(str, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+
+                builder.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setCancelable(false);
+
+                builder.create().show();
+            }
         }
     }
 }

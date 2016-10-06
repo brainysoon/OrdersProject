@@ -53,6 +53,10 @@ public class MyApplication extends Application {
     private static final String APPLYDATEINFO_SERVER = "getApplyDateInfor";
     private static final String APPLYDATEINFO_URL = PRE_URL + "//" + APPLYDATEINFO_SERVER;
 
+    //订单时间地址
+    private static final String ORDERDATEINFO_SERVER = "getOrderDateInfor";
+    private static final String ORDERDATAINFO_URL = PRE_URL + "//" + ORDERDATEINFO_SERVER;
+
     //审批申请单
     private static final String APPROVALAPPLY_SERVER = "setApplyApproval";
     private static final String APPROVALAPPLY_URL = PRE_URL + "//" + APPROVALAPPLY_SERVER;
@@ -157,6 +161,11 @@ public class MyApplication extends Application {
     //返回申请单时间地址
     public static String getApplydateinfoUrl() {
         return APPLYDATEINFO_URL;
+    }
+
+    //返回订单时间地址
+    public static String getOrderdatainfoUrl() {
+        return ORDERDATAINFO_URL;
     }
 
     //返回设置审批的地址
