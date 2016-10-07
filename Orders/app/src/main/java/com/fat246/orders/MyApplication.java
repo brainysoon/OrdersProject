@@ -65,6 +65,14 @@ public class MyApplication extends Application {
     private static final String APPROVALCANCLEAPPLY_SERVER = "setApplyApprovalCancel";
     private static final String APPROVALCANCLEAPPLY_URL = PRE_URL + "//" + APPROVALCANCLEAPPLY_SERVER;
 
+    //审批订单
+    private static final String APPROVALORDER_SERVER = "setOrderApproval";
+    private static final String APPROVALORDER_URL = PRE_URL + "//" + APPROVALORDER_SERVER;
+
+    //取消审批
+    private static final String APPROVALCANCLEORDER_SERVER = "setOrderApprovalCancel";
+    private static final String APPROVALCANCLEORDER_URL = PRE_URL + "//" + APPROVALCANCLEORDER_SERVER;
+
     //申请单落实情况地址
     private static final String APPLYFINALS_SERVER = "getApplyFinal";
     private static final String APPLYFINALS_URL = PRE_URL + "//" + APPLYFINALS_SERVER;
@@ -176,6 +184,16 @@ public class MyApplication extends Application {
     //返回取消审批的地址
     public static String getApprovalcancleapplyServer() {
         return APPROVALCANCLEAPPLY_URL;
+    }
+
+    //返回设置审批的地址
+    public static String getApprovalorderUrl() {
+        return APPROVALORDER_URL;
+    }
+
+    //返回取消审批的地址
+    public static String getApprovalcancleorderUrl() {
+        return APPROVALCANCLEORDER_URL;
     }
 
     //返回申请单落实情况

@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +24,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.fat246.orders.MyApplication;
 import com.fat246.orders.R;
 import com.fat246.orders.activity.MoreInfo;
@@ -37,6 +31,7 @@ import com.fat246.orders.activity.OrderStandInfoActivity;
 import com.fat246.orders.bean.OrderInfo;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.AllOrdersListParser;
+import com.fat246.orders.parser.ApprovalOrderParser;
 import com.fat246.orders.parser.OrderDateInfoParser;
 import com.fat246.orders.widget.Ptr.PtrClassicFrameLayout;
 import com.fat246.orders.widget.Ptr.PtrDefaultHandler;
@@ -44,14 +39,9 @@ import com.fat246.orders.widget.Ptr.PtrFrameLayout;
 import com.fat246.orders.widget.Ptr.PtrHandler;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AllOrdersFragment extends Fragment {
-
-    //地址
-    private static final String SET_ORDER_APPROVAL = "http://192.168.56.1:8080//Service1.asmx//setOrderApproval";
 
     //订单的地址
     private String ALLORDERSLIST_URL;
@@ -247,6 +237,11 @@ public class AllOrdersFragment extends Fragment {
         Button progressInfo = (Button) contentView.findViewById(R.id.popupwindow_progress_info);
         Button slectionState = (Button) contentView.findViewById(R.id.popupwindow_slection_state);
 
+        if (isLoadPassed) {
+
+            slectionState.setText(R.string.popupwindow_slection_state_not);
+        }
+
         standInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,6 +282,7 @@ public class AllOrdersFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
             }
         });
 
@@ -294,11 +290,19 @@ public class AllOrdersFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                TextView mID = (TextView) item.findViewById(R.id.all_orders_prhsord_id);
+                if (isLoadPassed) {
 
-                setOrderApprovalRequest(mID.getText().toString().trim());
+                    new ApprovalOrder(MyApplication.mUser.getmUser(),
+                            MyApplication.getApprovalcancleorderUrl())
+                            .execute(mList.get(position).getPRHSORD_ID());
+                } else {
 
-                Log.e("here", "comes");
+                    new ApprovalOrder(MyApplication.mUser.getmUser(),
+                            MyApplication.getApprovalorderUrl())
+                            .execute(mList.get(position).getPRHSORD_ID());
+                }
+
+                mPop.dismiss();
             }
         });
     }
@@ -367,40 +371,6 @@ public class AllOrdersFragment extends Fragment {
 
             mAdapter.notifyDataSetChanged();
         }
-    }
-
-    //设置  订单审批
-    private void setOrderApprovalRequest(final String OrderId) {
-
-        StringRequest mRequest = new StringRequest(Request.Method.POST, SET_ORDER_APPROVAL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-
-                Log.e("result", s);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-                Log.e("error", volleyError.toString());
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String, String> map = new HashMap<>();
-
-                map.put("authName", mUserInfo.getmUser());
-
-                map.put("OrderId", OrderId);
-                return map;
-            }
-        };
-
-        mRequest.setTag("setOrderApprovalRequest");
-
-        MyApplication.getQueue().add(mRequest);
     }
 
     //加载更多
@@ -549,6 +519,67 @@ public class AllOrdersFragment extends Fragment {
                 builder.setCancelable(false);
 
                 builder.create().show();
+            }
+        }
+    }
+
+    //撤销审批
+    private class ApprovalOrder extends AsyncTask<String, Void, Integer> {
+
+        private String authName;
+
+        private String URL_Str;
+
+        public ApprovalOrder(String authName, String URL_Str) {
+
+            this.authName = authName;
+            this.URL_Str = URL_Str;
+        }
+
+        @Override
+        protected Integer doInBackground(String... strings) {
+
+            return ApprovalOrderParser.getApprovalOrderParser(authName, strings[0], URL_Str);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+
+            String str = "未知错误";
+
+            if (isLoadPassed) {
+
+                switch (integer) {
+
+                    case 1:
+                        str = "取消审批成功";
+                        break;
+                    case 2:
+                        str = "取消审批操作";
+                        break;
+                    case 3:
+                        str = "已安排采购，不能操作";
+                }
+            } else {
+
+                switch (integer) {
+
+                    case 1:
+                        str = "审批成功";
+                        break;
+                    case 2:
+                        str = "审批操作失败";
+                        break;
+                    case 3:
+                        str = "审批信息变化，不能操作";
+                }
+            }
+
+            if (getContext() != null) {
+
+                Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
+
+                mPtrFrame.autoRefresh();
             }
         }
     }
