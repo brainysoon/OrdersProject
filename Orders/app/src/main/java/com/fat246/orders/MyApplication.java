@@ -77,6 +77,10 @@ public class MyApplication extends Application {
     private static final String APPLYFINALS_SERVER = "getApplyFinal";
     private static final String APPLYFINALS_URL = PRE_URL + "//" + APPLYFINALS_SERVER;
 
+    //订单落实情况地址
+    private static final String ORDERFINALS_SERVER = "getOrderFinal";
+    private static final String ORDERFINALS_URL = PRE_URL + "//" + ORDERFINALS_SERVER;
+
     //官方网站
     private static final String OFFICIAL_WEBSITE = "http://www.fat246.com";
 
@@ -199,6 +203,11 @@ public class MyApplication extends Application {
     //返回申请单落实情况
     public static String getApplyfinalsUrl() {
         return APPLYFINALS_URL;
+    }
+
+    //返回订单落实情况
+    public static String getOrderfinalsUrl() {
+        return ORDERFINALS_URL;
     }
 
     //返回申请单基本信息地址

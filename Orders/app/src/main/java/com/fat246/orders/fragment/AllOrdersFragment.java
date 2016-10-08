@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.fat246.orders.MyApplication;
 import com.fat246.orders.R;
 import com.fat246.orders.activity.MoreInfo;
+import com.fat246.orders.activity.OrderFinalsActivity;
 import com.fat246.orders.activity.OrderStandInfoActivity;
 import com.fat246.orders.bean.OrderInfo;
 import com.fat246.orders.bean.UserInfo;
@@ -282,7 +283,13 @@ public class AllOrdersFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(getContext(), OrderFinalsActivity.class);
 
+                intent.putExtra(OrderFinalsActivity.ORDER_ID, mList.get(position).getPRHSORD_ID());
+
+                getActivity().startActivity(intent);
+
+                mPop.dismiss();
             }
         });
 

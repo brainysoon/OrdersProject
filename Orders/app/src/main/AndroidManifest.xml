@@ -72,6 +72,13 @@
         <activity
             android:name=".activity.ApplyFinalsActivity"
             android:label="@string/title_activity_apply_finals">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.fat246.orders.activity.MainPage" />
+        </activity>
+        <activity
+            android:name=".activity.OrderFinalsActivity"
+            android:label="@string/title_activity_order_finals">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
