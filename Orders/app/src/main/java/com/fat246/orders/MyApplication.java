@@ -8,12 +8,13 @@ import android.os.Environment;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.fat246.orders.bean.UserInfo;
+import com.fat246.orders.utils.PreferencesUtility;
 
 public class MyApplication extends Application {
 
     //表示服务器地址的一些全局变量
-    private static final String SERVER_IP = "192.168.1.127";
-    private static final String SERVER_PORT = "8081";
+    private static String SERVER_IP = "192.168.1.127";
+    private static String SERVER_PORT = "8081";
     private static final String SERVER_NAME = "Service1.asmx";
     private static final String PRE_URL = "http://" + SERVER_IP + ":" + SERVER_PORT + "//" + SERVER_NAME;
 
@@ -42,7 +43,7 @@ public class MyApplication extends Application {
     private static final String LOGIN_URL = PRE_URL + "//" + LOGIN_SERVER;
 
     //订单基本信息地址
-    private static final String ORDER_STAND_INFO = "orderstandinfo";
+    private static final String ORDER_STAND_INFO = "getOrderInfor";
     private static final String ORDER_STAND_INFO_URL = PRE_URL + "//" + ORDER_STAND_INFO;
 
     //申请单基本信息地址
@@ -96,7 +97,11 @@ public class MyApplication extends Application {
 
     @Override
     public void onCreate() {
+
         super.onCreate();
+
+        //获得服务器参数信息
+        setServerRex();
 
         //首先从配置文件中获取用户信息
         setUserInfo();
@@ -106,6 +111,12 @@ public class MyApplication extends Application {
 
         //获得路经
         MyApplication.SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
+    }
+
+    public void setServerRex() {
+
+        SERVER_IP = PreferencesUtility.getInstance(this).getServerIp();
+        SERVER_PORT = PreferencesUtility.getInstance(this).getServerPort();
     }
 
     //通过配置文件获取用户的信息
@@ -233,5 +244,17 @@ public class MyApplication extends Application {
     //返回订单基本信息地址
     public static String getOrderStandInfoUrl() {
         return ORDER_STAND_INFO_URL;
+    }
+
+    //设置服务器ip
+    public static void setServerIp(String ip) {
+
+        SERVER_IP = ip;
+    }
+
+    //设置服务器端口
+    public static void setServerPort(String port) {
+
+        SERVER_PORT = port;
     }
 }

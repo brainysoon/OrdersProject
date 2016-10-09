@@ -121,4 +121,15 @@
     <string name="prhsod_accein">收获数量</string>
     <string name="prhsod_billin">入库数量</string>
     <string name="prhsod_amnt_rtn">退货数量</string>
+
+    <!--设置服务器ip-->
+    <string name="setting_server">服务器参数设置</string>
+    <string name="setting_server_ip">设置服务器ip</string>
+    <string name="setting_server_ip_hint">例如：192.168.1.127</string>
+    <string name="setting_server_ip_default">192.168.1.127</string>
+
+    <string name="setting_server_port">设置服务器端口</string>
+    <string name="setting_server_port_hint">例如：8081</string>
+    <string name="setting_server_port_default">8081</string>
+
 </resources>

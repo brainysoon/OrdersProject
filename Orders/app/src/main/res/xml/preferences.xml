@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:key="pref_sync"
-        android:title="设置"
-        android:summary="设置"
-        android:defaultValue="true" />
+    <PreferenceCategory android:title="@string/setting_server">
+
+        <EditTextPreference
+            android:defaultValue="@string/setting_server_ip_default"
+            android:key="setting_server_ip"
+            android:summary="@string/setting_server_ip_hint"
+            android:title="@string/setting_server_ip" />
+
+        <EditTextPreference
+            android:defaultValue="@string/setting_server_port_default"
+            android:key="setting_server_port"
+            android:summary="@string/setting_server_port_hint"
+            android:title="@string/setting_server_port" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
