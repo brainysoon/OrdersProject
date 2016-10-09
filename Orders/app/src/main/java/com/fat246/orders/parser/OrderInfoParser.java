@@ -113,42 +113,39 @@ public class OrderInfoParser {
 
                             eventType = parser.next();
                             String str = parser.getText();
+                            if (str == null) {
+
+                                str = "暂无信息";
+                            }
                             switch (i % 6) {
 
                                 case 0:
                                     ORDER_ID = str;
 
-                                    if (ORDER_ID == null) ORDER_ID = "";
                                     break;
                                 case 1:
                                     ORDER_PROVIDER = str;
 
-                                    if (ORDER_PROVIDER == null) ORDER_PROVIDER = "";
                                     break;
                                 case 2:
                                     COMPLETE_STATUS = str;
 
-                                    if (COMPLETE_STATUS == null) COMPLETE_STATUS = "";
                                     break;
 
                                 case 3:
 
                                     ORDER_OWNER = str;
 
-                                    if (ORDER_OWNER == null) ORDER_OWNER = "";
                                     break;
 
                                 case 4:
 
                                     ORDER_MAINTAIN = str;
 
-                                    if (ORDER_MAINTAIN == null) ORDER_MAINTAIN = "";
                                     break;
                                 case 5:
 
                                     ORDER_JUDGE = str;
-
-                                    if (ORDER_JUDGE == null) ORDER_JUDGE = "";
 
                                     orderStandInfo = new OrderStandInfo(ORDER_ID, ORDER_PROVIDER, COMPLETE_STATUS,
                                             ORDER_OWNER, ORDER_MAINTAIN, ORDER_JUDGE);
