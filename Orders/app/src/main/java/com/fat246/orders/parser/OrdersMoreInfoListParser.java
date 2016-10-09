@@ -104,16 +104,12 @@ public class OrdersMoreInfoListParser {
             int i = 0;
 
             //引用
-            String MATE_Code=null;
-            String MATE_Name=null;
-            String MUNITU_NAME=null;
-            String MATE_Size=null;
-            String MATE_Model=null;
-            String PRHSOD_AMNT=null;
-            String PRHSOD_ACCEIN=null;
-            String PRHSOD_BILLIN=null;
-            String PRHSOD_AMNT_RTN=null;
-            String MATE_PRICEP=null;
+            String MATE_Code = null;
+            String MATE_Name = null;
+            String MATE_Size = null;
+            String MATE_Model = null;
+            String PRHSOD_AMNT = null;
+            String PSR_NAME = null;
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
 
@@ -127,68 +123,48 @@ public class OrdersMoreInfoListParser {
 
                             eventType = parser.next();
                             String str = parser.getText();
-                            switch (i % 10) {
+
+                            if (str == null) {
+
+                                str = "暂无信息";
+                            }
+                            switch (i % 6) {
 
                                 case 0:
+                                    PSR_NAME = str;
+
+                                    break;
+
+                                case 1:
                                     MATE_Code = str;
 
-                                    if (MATE_Code == null) MATE_Code = "";
-                                    break;
-                                case 1:
-                                    MATE_Name = str;
-
-                                    if (MATE_Name == null) MATE_Name = "";
                                     break;
                                 case 2:
-                                    MUNITU_NAME = str;
+                                    MATE_Name = str;
 
-                                    if (MUNITU_NAME == null) MUNITU_NAME = "";
                                     break;
+
                                 case 3:
-                                    MATE_Size = str;
-
-                                    if (MATE_Size == null) MATE_Size = "";
-                                    break;
-                                case 4:
                                     MATE_Model = str;
 
-                                    if (MATE_Model == null) MATE_Model = "";
                                     break;
-                                case 5:
+
+                                case 4:
                                     PRHSOD_AMNT = str;
 
                                     if (PRHSOD_AMNT == null) PRHSOD_AMNT = "";
                                     break;
-                                case 6:
-                                    PRHSOD_ACCEIN = str;
 
-                                    if (PRHSOD_ACCEIN == null) PRHSOD_ACCEIN = "";
-                                    break;
-                                case 7:
-                                    PRHSOD_BILLIN = str;
+                                case 5:
+                                    MATE_Size = str;
 
-                                    if (PRHSOD_BILLIN == null) PRHSOD_BILLIN = "";
-                                    break;
-                                case 8:
-                                    PRHSOD_AMNT_RTN = str;
-
-                                    if (PRHSOD_AMNT_RTN == null) PRHSOD_AMNT_RTN = "";
-                                    break;
-                                case 9:
-                                    MATE_PRICEP = str;
-
-                                    if (MATE_PRICEP == null) MATE_PRICEP = "";
 
                                     mOrdersMoreInfoList.add(new OrderMoreInfoListItem(MATE_Code
-                                    , MATE_Name
-                                    , MUNITU_NAME
-                                    , MATE_Size
-                                    , MATE_Model
-                                    , PRHSOD_AMNT
-                                    , PRHSOD_ACCEIN
-                                    , PRHSOD_BILLIN
-                                    , PRHSOD_AMNT_RTN
-                                    , MATE_PRICEP));
+                                            , MATE_Name
+                                            , MATE_Model
+                                            , PSR_NAME
+                                            , MATE_Size
+                                            , PRHSOD_AMNT));
                                     break;
 
                             }

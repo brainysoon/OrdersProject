@@ -76,16 +76,12 @@
     <string name="popupwindow_slection_state_not">撤销审批</string>
 
     <!--订单详细信息-->
-    <string name="order_more_info_list_item_MATE_Code">MATE_Code:</string>
-    <string name="order_more_info_list_item_MATE_Name">MATE_Name:</string>
-    <string name="order_more_info_list_item_MUNITU_NAME">MUNITU_NAME:</string>
-    <string name="order_more_info_list_item_MATE_Size">MATE_Size:</string>
-    <string name="order_more_info_list_item_MATE_Model">MATE_Model:</string>
-    <string name="order_more_info_list_item_PRHSOD_AMNT">PRHSOD_AMNT:</string>
-    <string name="order_more_info_list_item_PRHSOD_ACCEIN">PRHSOD_ACCEIN:</string>
-    <string name="order_more_info_list_item_PRHSOD_BILLIN">PRHSOD_BILLIN:</string>
-    <string name="order_more_info_list_item_PRHSOD_AMNT_RTN">PRHSOD_AMNT_RTN:</string>
-    <string name="order_more_info_list_item_MATE_PRICEP">MATE_PRICEP:</string>
+    <string name="order_more_info_list_item_MATE_Code">材料代码:</string>
+    <string name="order_more_info_list_item_MATE_Name">材料名称:</string>
+    <string name="order_more_info_list_item_MATE_Size">总金额:</string>
+    <string name="order_more_info_list_item_MATE_Model">单位:</string>
+    <string name="order_more_info_list_item_PRHSOD_AMNT">数量:</string>
+    <string name="order_more_info_list_item_PSR_NAME">来源:</string>
 
     <!--申请单详细信息-->
     <string name="apply_more_info_list_item_MATE_Code">材料代码：</string>
