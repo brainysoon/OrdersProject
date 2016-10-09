@@ -16,71 +16,55 @@ public class MyApplication extends Application {
     private static String SERVER_IP = "192.168.1.127";
     private static String SERVER_PORT = "8081";
     private static final String SERVER_NAME = "Service1.asmx";
-    private static final String PRE_URL = "http://" + SERVER_IP + ":" + SERVER_PORT + "//" + SERVER_NAME;
-
+    private static final String PRE_HTTP = "http://";
 
     //请求队列
     private static RequestQueue Queue;
 
     //订单地址
     private static final String ALLORDERSLIST_SERVER = "getAllOrderList";
-    private static final String ALLORDERSLIST_URL = PRE_URL + "//" + ALLORDERSLIST_SERVER;
 
     //申请单地址
     private static final String ALLAPPLYSLIST_SERVER = "getAllApplyList";
-    private static final String ALLAPPLYSLIST_URL = PRE_URL + "//" + ALLAPPLYSLIST_SERVER;
 
     //订单详细信息地址
     private static final String ORDERSMOREINFOLIST_SERVER = "getOrderDetailList";
-    private static final String ORDERSMOREINFOLIST_URL = PRE_URL + "//" + ORDERSMOREINFOLIST_SERVER;
 
     //申请单详细信息地址
     private static final String APPLYSMOREINFOLIST_SERVER = "getApplyDetailList";
-    private static final String APPLYSMOREINFOLIST_URL = PRE_URL + "//" + APPLYSMOREINFOLIST_SERVER;
 
     //登陆要用到的URL 这个要配合到  URL前缀一起使用
     private static final String LOGIN_SERVER = "isLogin";
-    private static final String LOGIN_URL = PRE_URL + "//" + LOGIN_SERVER;
 
     //订单基本信息地址
-    private static final String ORDER_STAND_INFO = "getOrderInfor";
-    private static final String ORDER_STAND_INFO_URL = PRE_URL + "//" + ORDER_STAND_INFO;
+    private static final String ORDERSTANDINFO_SERVER = "getOrderInfor";
 
     //申请单基本信息地址
     private static final String APPLYINFO_SERVER = "getApplyInfor";
-    private static final String APPLYINFO_URL = PRE_URL + "//" + APPLYINFO_SERVER;
 
     //申请单时间地址
     private static final String APPLYDATEINFO_SERVER = "getApplyDateInfor";
-    private static final String APPLYDATEINFO_URL = PRE_URL + "//" + APPLYDATEINFO_SERVER;
 
     //订单时间地址
     private static final String ORDERDATEINFO_SERVER = "getOrderDateInfor";
-    private static final String ORDERDATAINFO_URL = PRE_URL + "//" + ORDERDATEINFO_SERVER;
 
     //审批申请单
     private static final String APPROVALAPPLY_SERVER = "setApplyApproval";
-    private static final String APPROVALAPPLY_URL = PRE_URL + "//" + APPROVALAPPLY_SERVER;
 
     //取消审批地址
     private static final String APPROVALCANCLEAPPLY_SERVER = "setApplyApprovalCancel";
-    private static final String APPROVALCANCLEAPPLY_URL = PRE_URL + "//" + APPROVALCANCLEAPPLY_SERVER;
 
     //审批订单
     private static final String APPROVALORDER_SERVER = "setOrderApproval";
-    private static final String APPROVALORDER_URL = PRE_URL + "//" + APPROVALORDER_SERVER;
 
     //取消审批
     private static final String APPROVALCANCLEORDER_SERVER = "setOrderApprovalCancel";
-    private static final String APPROVALCANCLEORDER_URL = PRE_URL + "//" + APPROVALCANCLEORDER_SERVER;
 
     //申请单落实情况地址
     private static final String APPLYFINALS_SERVER = "getApplyFinal";
-    private static final String APPLYFINALS_URL = PRE_URL + "//" + APPLYFINALS_SERVER;
 
     //订单落实情况地址
     private static final String ORDERFINALS_SERVER = "getOrderFinal";
-    private static final String ORDERFINALS_URL = PRE_URL + "//" + ORDERFINALS_SERVER;
 
     //官方网站
     private static final String OFFICIAL_WEBSITE = "http://www.fat246.com";
@@ -161,74 +145,80 @@ public class MyApplication extends Application {
         return this.mUserInfo;
     }
 
+    //Pre
+    public static String getServerPre() {
+
+        return PRE_HTTP + SERVER_IP + ":" + SERVER_PORT + "//" + SERVER_NAME;
+    }
+
     //获得订单地址
     public static String getAllorderslistUrl() {
-        return ALLORDERSLIST_URL;
+        return getServerPre() + "//" + ALLORDERSLIST_SERVER;
     }
 
     //返回申请单
     public static String getAllapplyslistUrl() {
-        return ALLAPPLYSLIST_URL;
+        return getServerPre() + "//" + ALLAPPLYSLIST_SERVER;
     }
 
     //返回订单详细信息地址
     public static String getOrdersmoreinfolistUrl() {
-        return ORDERSMOREINFOLIST_URL;
+        return getServerPre() + "//" + ORDERSMOREINFOLIST_SERVER;
     }
 
     //返回申请单详细信息地址
     public static String getApplysmoreinfolistUrl() {
-        return APPLYSMOREINFOLIST_URL;
+        return getServerPre() + "//" + APPLYSMOREINFOLIST_SERVER;
     }
 
     //返回申请单时间地址
     public static String getApplydateinfoUrl() {
-        return APPLYDATEINFO_URL;
+        return getServerPre() + "//" + APPLYDATEINFO_SERVER;
     }
 
     //返回订单时间地址
     public static String getOrderdatainfoUrl() {
-        return ORDERDATAINFO_URL;
+        return getServerPre() + "//" + ORDERDATEINFO_SERVER;
     }
 
     //返回设置审批的地址
     public static String getApprovalapplyUrl() {
-        return APPROVALAPPLY_URL;
+        return getServerPre() + "//" + APPROVALAPPLY_SERVER;
     }
 
     //返回取消审批的地址
     public static String getApprovalcancleapplyServer() {
-        return APPROVALCANCLEAPPLY_URL;
+        return getServerPre() + "//" + APPROVALCANCLEAPPLY_SERVER;
     }
 
     //返回设置审批的地址
     public static String getApprovalorderUrl() {
-        return APPROVALORDER_URL;
+        return getServerPre() + "//" + APPROVALORDER_SERVER;
     }
 
     //返回取消审批的地址
     public static String getApprovalcancleorderUrl() {
-        return APPROVALCANCLEORDER_URL;
+        return getServerPre() + "//" + APPROVALCANCLEORDER_SERVER;
     }
 
     //返回申请单落实情况
     public static String getApplyfinalsUrl() {
-        return APPLYFINALS_URL;
+        return getServerPre() + "//" + APPLYFINALS_SERVER;
     }
 
     //返回订单落实情况
     public static String getOrderfinalsUrl() {
-        return ORDERFINALS_URL;
+        return getServerPre() + "//" + ORDERFINALS_SERVER;
     }
 
     //返回申请单基本信息地址
     public static String getApplyinfoUrl() {
-        return APPLYINFO_URL;
+        return getServerPre() + "//" + APPLYINFO_SERVER;
     }
 
     //获得登陆的地址
     public static String getLoginUrl() {
-        return LOGIN_URL;
+        return getServerPre() + "//" + LOGIN_SERVER;
     }
 
     //返回官方网址
@@ -243,7 +233,7 @@ public class MyApplication extends Application {
 
     //返回订单基本信息地址
     public static String getOrderStandInfoUrl() {
-        return ORDER_STAND_INFO_URL;
+        return getServerPre() + "//" + ORDERSTANDINFO_SERVER;
     }
 
     //设置服务器ip
