@@ -78,9 +78,6 @@ public class OrderInfoParser {
             orderStandInfo = null;
         }
 
-        //添加一点 车市数据
-        orderStandInfo = new OrderStandInfo("1213", "1213", "1213", "1213", "1213", "1213");
-
         return orderStandInfo;
     }
 
