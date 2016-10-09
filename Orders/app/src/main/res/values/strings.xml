@@ -22,6 +22,7 @@
     <string name="error_field_required">请求失败</string>
     <string name="permission_rationale">需要你提供读取联系人的权限.</string>
     <string name="forgot_password">忘记密码?</string>
+    <string name="to_setting">设置</string>
     <string name="new_user">新用户</string>
     <string name="title_activity_main_page">主页</string>
     <string name="action_settings">设置</string>

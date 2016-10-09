@@ -73,12 +73,13 @@
                     android:id="@+id/save_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/save_password"/>
+                    android:text="@string/save_password" />
+
                 <CheckBox
                     android:id="@+id/auto_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/auto_login"/>
+                    android:text="@string/auto_login" />
             </LinearLayout>
 
             <Button
@@ -91,6 +92,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -100,18 +102,25 @@
             android:id="@+id/action_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
-            android:text="@string/forgot_password"
-            />
+            android:layout_alignParentLeft="true"
+            android:text="@string/forgot_password" />
+
+        <TextView
+            android:id="@+id/action_to_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/to_setting" />
+
         <TextView
             android:id="@+id/action_new_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:text="@string/new_user"
-            />
+            android:layout_alignParentRight="true"
+            android:text="@string/new_user" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -22,8 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fat246.orders.R;
 import com.fat246.orders.MyApplication;
+import com.fat246.orders.R;
 import com.fat246.orders.bean.UserInfo;
 import com.fat246.orders.parser.LogInParser;
 
@@ -39,6 +39,7 @@ public class LoginPage extends AppCompatActivity {
     private CheckBox mAutoLogIn;
     private TextView mForgotPassword;
     private TextView mNewUser;
+    private TextView mToSetting;
 
     //异步线程
     private UserLogInTask mAuthTask = null;
@@ -116,6 +117,7 @@ public class LoginPage extends AppCompatActivity {
         mAutoLogIn = (CheckBox) findViewById(R.id.auto_login);
         mForgotPassword = (TextView) findViewById(R.id.action_forgot_password);
         mNewUser = (TextView) findViewById(R.id.action_new_user);
+        mToSetting = (TextView) findViewById(R.id.action_to_settings);
     }
 
     //监听
@@ -190,6 +192,16 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        mToSetting.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(LoginPage.this, SettingActivity.class);
+
+                startActivity(intent);
             }
         });
     }
